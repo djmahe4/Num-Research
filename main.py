@@ -213,7 +213,7 @@ if st.button("Run Prediction"):
     ck=15 #ck should be set to 15 by default
     st.write("Today        =", today.strftime("%d%b%Y"))
     st.write("Age in days  =", days)
-    st.write("Biorhythm value",bio[ck])
+    st.write(f"Biorhythm value: {bio[ck]:.4f}")
     st.write("-"*58)
     print("-"*58)
     di={}
