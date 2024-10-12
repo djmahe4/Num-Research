@@ -210,8 +210,10 @@ if st.button("Run Prediction"):
     print("-"*58)
     st.write("-"*58)
     today = datetime.date.today()
+    ck=15 #ck should be set to 15 by default
     st.write("Today        =", today.strftime("%d%b%Y"))
     st.write("Age in days  =", days)
+    st.write("Biorhythm value",bio[ck])
     st.write("-"*58)
     print("-"*58)
     di={}
@@ -221,16 +223,13 @@ if st.button("Run Prediction"):
     # Print table header
     print("Date \t\t|\t\tValue")
     print("-" * 30)  # Separator line
-
     # Loop through the dictionary and print each date-value pair
     for date, value in di.items():
       print(f"{date} \t|\t {value:.4f}")
     new=pd.DataFrame(di.items(),columns=["Date","Values"])
     st.table(new)
     #plot_biorhythm_chart(bio, date_list)
-    ck=15 #ck should be set to 15 by default
     #if st.button("Continue?"):
-
     if pts=='Yes':
         try:
             prev = st.text_input("Enter points:",key=3)
