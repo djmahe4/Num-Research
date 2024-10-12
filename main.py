@@ -127,12 +127,12 @@ def biorhythm_chart(days, combined):
     return biorhythm_data[0]
 
 
-def plot_biorhythm_chart(combined_points, dates, cycle_label="Combined"):
+def plot_biorhythm_chart(combined_points, dates,st, cycle_label="Combined"):
   """Plots the biorhythm chart with dates using matplotlib.pyplot."""
 
   if len(combined_points) != len(dates):
     raise ValueError("Combined points and dates lists must have the same length.")
-
+  fig,ax=pli.subplots()
   plt.figure(figsize=(10, 6))
   plt.plot(combined_points, label=cycle_label)
 
@@ -148,7 +148,8 @@ def plot_biorhythm_chart(combined_points, dates, cycle_label="Combined"):
   plt.legend()
   plt.grid(True)
   plt.tight_layout()  # Adjust spacing to avoid overlapping labels
-  plt.show()
+  #plt.show()
+  st.pyplot(fig)
 def get_date_range(days_before=15, days_after=14):
   """
   Finds today's date and a range of dates before and after in dd-mm-yyyy format.
@@ -176,11 +177,11 @@ date_list = get_date_range()
 
 st.title("Numerology app!")
 #while True:
-name = st.text_input("Enter your name: ",key=1)
+name = st.text_input("Enter name: ",key=1)
     #if name!="":
         #break
 #while True:
-date_of_birth = st.text_input("Enter your date of birth (YYYY-MM-DD): ",key=2)
+date_of_birth = st.text_input("Enter date of birth (YYYY-MM-DD): ",key=2)
 pts=st.radio("Previous match points?",['Yes','No'])
     #if date_of_birth!="":
         #break
@@ -238,6 +239,8 @@ if st.button("Run Prediction"):
         except ValueError:
             print(f"{bio[ck]:.4f}")
             print(f"x+ points:{int(bio[ck] * typ)}")
+    if bio[ck-1]==bio[ck+1]:
+        st.write("Warning!! Prediction may fail!")
     #if st.button("Continue"):
     #print(bio)
     ls=[abs(round(ele,4)) for ele in bio[:-(ck+1):-1]]
@@ -284,5 +287,6 @@ if st.button("Run Prediction"):
             print("Pipe!")
             st.write("Pipe!")
             break
+    plot_biorhythm_chart(list(di.values()), list(di.keys()),st)
 #if st.button("Rerun.."):
     #st.rerun()
