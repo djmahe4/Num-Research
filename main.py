@@ -240,7 +240,7 @@ if st.button("Run Prediction"):
         except ValueError:
             print(f"{bio[ck]:.4f}")
             print(f"x+ points:{int(bio[ck] * typ)}")
-    if bio[ck-1]==bio[ck+1]:
+    if abs(bio[ck-1])==abs(bio[ck+1]):
         st.write("Warning!! Prediction may fail!")
     #if st.button("Continue"):
     #print(bio)
