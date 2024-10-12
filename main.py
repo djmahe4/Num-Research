@@ -141,7 +141,7 @@ def plot_biorhythm_chart(combined_points, dates,st, cycle_label="Combined"):
   plt.xticks(range(len(combined_points)))  # Use data point indices
 
   # Add dates below the x-axis (optional, adjust spacing as needed)
-  plt.xticks(range(len(combined_points)), [d[:6] for d in dates], rotation=0, ha='left', va='bottom', fontsize=8)
+  plt.xticks(range(len(combined_points)), [d[:5] for d in dates], rotation=0, ha='left', va='bottom', fontsize=6)
 
   plt.xlabel("Day")  # Adjust label if needed
   plt.ylabel("Biorhythm Level")
