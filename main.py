@@ -132,7 +132,7 @@ def plot_biorhythm_chart(combined_points, dates,st, cycle_label="Combined"):
 
   if len(combined_points) != len(dates):
     raise ValueError("Combined points and dates lists must have the same length.")
-  fig,ax=pli.subplots()
+  fig,ax=plt.subplots()
   plt.figure(figsize=(10, 6))
   plt.plot(combined_points, label=cycle_label)
 
