@@ -100,13 +100,14 @@ def combine_numbers( moolank,bhagyank, naamank):
         typ=+9.81
     return combined ,typ#if moolank> else ValueError # - fibonacci_offset, fibonacci_sequence
 
-def combine_numbers2( moolank,bhagyank, naamank):
+def combine_numbers2( moolank,bhagyank, naamank,st):
     """Combines Moolank, Bhagyank, and Naamank with Fibonacci offset (not scientific)"""
     #combined = (moolank * 3 + bhagyank * 2 + normalized_naamank)  # / 6
     #combined= moolank+(bhagyank*naamank)
     combined = bhagyank + (moolank * naamank)
     #print('{}*{}+{}={}'.format(bhagyank, naamank, moolank, combined))
     print('{}+({}*{})={}'.format(bhagyank, moolank,naamank, combined))
+    st.write('{}+({}*{})={}'.format(bhagyank, moolank,naamank, combined))
     typ= +9.81
     #if combined<=9:
             #combined = bhagyank * naamank
@@ -202,7 +203,7 @@ if st.button("Run Prediction"):
 
     # Biorhythm chart parameters (adjust as needed)
     # cycles = [23, 28, 33]  # Physical,
-    comb,typ = combine_numbers2( moolank,bhagyank, naamank)
+    comb,typ = combine_numbers2( moolank,bhagyank, naamank,st)
     days = days_since_birth(date_of_birth)
     bio = biorhythm_chart(days, comb)
     #print(bio)
