@@ -239,7 +239,7 @@ if st.button("Run Prediction"):
         except ValueError:
             print(f"{bio[ck]:.4f}")
             print(f"x+ points:{int(bio[ck] * typ)}")
-    if abs(float(f"{bio[ck-1]}"}:.4f))==abs(float(f"{bio[ck+1]}:.4f")):
+    if abs(float(f"{bio[ck-1]}":.4f))==abs(float(f"{bio[ck+1]}:.4f")):
         st.write("Warning!! Prediction may fail!")
     #if st.button("Continue"):
     #print(bio)
