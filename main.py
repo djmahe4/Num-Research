@@ -128,7 +128,7 @@ def biorhythm_chart(days, combined):
     return biorhythm_data[0]
 
 
-def plot_biorhythm_chart(combined_points, dates,st, cycle_label="Combined"):
+def plot_biorhythm_chart(combined_points, dates,st,name, cycle_label="Combined"):
   """Plots the biorhythm chart with dates using matplotlib.pyplot."""
 
   if len(combined_points) != len(dates):
@@ -145,7 +145,7 @@ def plot_biorhythm_chart(combined_points, dates,st, cycle_label="Combined"):
 
   plt.xlabel("Day")  # Adjust label if needed
   plt.ylabel("Biorhythm Level")
-  plt.title("Biorhythm Chart (not scientific)")
+  plt.title(f"Biorhythm Chart ({name})")
   plt.legend()
   plt.grid(True)
   plt.tight_layout()  # Adjust spacing to avoid overlapping labels
@@ -287,6 +287,6 @@ if st.button("Run Prediction"):
             print("Pipe!")
             st.write("Pipe!")
             break
-    plot_biorhythm_chart(list(di.values()), list(di.keys()),st)
+    plot_biorhythm_chart(list(di.values()), list(di.keys()),st,name)
 #if st.button("Rerun.."):
     #st.rerun()
