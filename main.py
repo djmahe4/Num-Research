@@ -181,7 +181,7 @@ name = st.text_input("Enter name: ",key=1)
     #if name!="":
         #break
 #while True:
-pbirth =st.text_input("Date of birth (eg 'Dec 10, 1996'")
+pbirth =st.text_input("Date of birth (eg 'Dec 10, 1996')")
 pts=st.radio("Previous match points?",['Yes','No'])
 match_date = st.date_input("Match Date",value=date.today())
     #if date_of_birth!="":
@@ -212,9 +212,9 @@ if st.button("Run Prediction"):
     #print(bio)
     print("-"*58)
     st.write("-"*58)
-    today = date.today()
+    #today = date.today()
     ck=15 #ck should be set to 15 by default
-    st.write("Today        =", today.strftime("%d%b%Y"))
+    st.write("Match Date       =", match_date.strftime("%d%b%Y"))
     st.write("Age in days  =", days)
     st.write(f"Biorhythm value: {bio[ck]:.4f}")
     st.write("-"*58)
@@ -305,6 +305,7 @@ if st.button("Run Prediction"):
         'Bio':bio[15],
         'bio-1':bio[16],
         'bio-2':bio[17],
+        'days':days,
         #'Physical': physical,
         #'Emotional': emotional,
         #'Intellectual': intellectual,
