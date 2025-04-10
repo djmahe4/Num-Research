@@ -1,15 +1,15 @@
 import math
 import matplotlib.pyplot as plt
-import matplotlib
-from datetime import date,timedelta
-import datetime
-from matplotlib import dates
+# import matplotlib
+from datetime import date,timedelta,datetime
+#import datetime
+# from matplotlib import dates
 import streamlit as st
 import pandas as pd
 
-def days_since_birth(date_of_birth):
+def days_since_birth(date_of_birth,today=date.today()):
     """Calculates the number of days since birth considering leap years"""
-    today = date.today()
+    #today = date.today()
     # Extract year, month, day from the provided date of birth string
     year, month, day = map(int, date_of_birth.split("-"))
 
@@ -151,7 +151,7 @@ def plot_biorhythm_chart(combined_points, dates,st,name, cycle_label="Combined")
   plt.tight_layout()  # Adjust spacing to avoid overlapping labels
   #plt.show()
   st.pyplot(fig)
-def get_date_range(days_before=15, days_after=14):
+def get_date_range(today = date.today(),days_before=15, days_after=14):
   """
   Finds today's date and a range of dates before and after in dd-mm-yyyy format.
 
@@ -162,19 +162,18 @@ def get_date_range(days_before=15, days_after=14):
   Returns:
       list: A list of strings representing the dates in dd-mm-yyyy format.
   """
-  today = date.today()
+
   date_range = []
 
   # Add date 15 days before today
   #date_range.append(today - timedelta(days=days_before))
-  for i in range(-15, days_after +1):
+  for i in range(-days_before, days_after +1):
     date_range.append(today - timedelta(days=i))
   formatted_dates = [date.strftime("%d-%m-%Y") for date in date_range]
 
   return formatted_dates
 
-# Get the date range
-date_list = get_date_range()
+
 
 st.title("Numerology app!")
 #while True:
@@ -182,14 +181,18 @@ name = st.text_input("Enter name: ",key=1)
     #if name!="":
         #break
 #while True:
-date_of_birth = st.text_input("Enter date of birth (YYYY-MM-DD): ",key=2)
+pbirth =st.text_input("Date of birth (eg 'Dec 10, 1996'")
 pts=st.radio("Previous match points?",['Yes','No'])
+match_date = st.date_input("Match Date",value=date.today())
     #if date_of_birth!="":
         #break
 if st.button("Run Prediction"):
+# Get the date range
+    date_list = get_date_range(match_date)
 # Get user input
     # Calculate Moolank, Bhagyank, and Naamank
-
+    #do=datetime.strptime(pbirth,'%b %d, %Y')
+    date_of_birth=match_date.strftime("%Y-%m-%d")
     bhagyank = calculate_bhagyank(date_of_birth)
     moolank = calculate_moolank(date_of_birth)
     naamank = calculate_naamank(name)
@@ -204,12 +207,12 @@ if st.button("Run Prediction"):
     # Biorhythm chart parameters (adjust as needed)
     # cycles = [23, 28, 33]  # Physical,
     comb,typ = combine_numbers2( moolank,bhagyank, naamank,st)
-    days = days_since_birth(date_of_birth)
+    days = days_since_birth(date_of_birth,match_date)
     bio = biorhythm_chart(days, comb)
     #print(bio)
     print("-"*58)
     st.write("-"*58)
-    today = datetime.date.today()
+    today = date.today()
     ck=15 #ck should be set to 15 by default
     st.write("Today        =", today.strftime("%d%b%Y"))
     st.write("Age in days  =", days)
@@ -288,5 +291,37 @@ if st.button("Run Prediction"):
             st.write("Pipe!")
             break
     plot_biorhythm_chart(list(di.values()), list(di.keys()),st,name)
+# Store data in session state
+    if 'players' not in st.session_state:
+        st.session_state.players = []
+    st.session_state.players.append({
+        'Name': name,
+        'DOB': date_of_birth,
+        'Naamank': naamank,
+        'Moolank': moolank,
+        'Bhagyank': bhagyank,
+        'bio+2':bio[13],
+        'bio+1':bio[14],
+        'Bio':bio[15],
+        'bio-1':bio[16],
+        'bio-2':bio[17],
+        #'Physical': physical,
+        #'Emotional': emotional,
+        #'Intellectual': intellectual,
+        #'Performance Score': performance_score,
+        'Dream': False
+    })
+
+# Display players in a table
+if 'players' in st.session_state:
+    df = pd.DataFrame(st.session_state.players)
+    df['Dream'] = [st.checkbox(f"Dream Player {row['Name']}?", value=row['Dream']) for i, row in df.iterrows()]
+    st.dataframe(df)
+
+    # Save to CSV
+    if st.button("Save to CSV"):
+        df.to_csv("fantasy_team.csv", index=False)
+        st.success("Data saved to fantasy_team.csv!")
+
 #if st.button("Rerun.."):
     #st.rerun()
